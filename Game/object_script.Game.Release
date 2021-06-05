@@ -1,0 +1,13 @@
+INPUT(
+./release\main.o
+./release\cmainwidget.o
+./release\cloginwidget.o
+./release\cscreenwidget.o
+./release\cbackgroundlab.o
+./release\cpushbutton.o
+./release\crole.o
+./release\moc_cmainwidget.o
+./release\moc_cloginwidget.o
+./release\moc_cscreenwidget.o
+./release\moc_crole.o
+);

@@ -5,10 +5,12 @@
 CScreenWidget::CScreenWidget(QWidget *parent) : QWidget(parent)
 {
     m_pScreenLab = new CBackgroundLab(this);
-    m_pScreenLab->setScaledContents(true);
 
     QPixmap pixmap("./screen.jpg");
     m_pScreenLab->setPixmap(pixmap);
+
+    m_pRole = new CRole(this);
+    m_pRole->move(this->width()/10, this->height()/10);
 }
 
 void CScreenWidget::resizeEvent(QResizeEvent *event)

@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "cbackgroundlab.h"
+#include "crole.h"
 
 class CScreenWidget : public QWidget
 {
@@ -20,6 +21,8 @@ public slots:
 
 private:
     CBackgroundLab *m_pScreenLab;
+
+    CRole *m_pRole;
 };
 
 #endif // CSCREENWIDGET_H

@@ -17,12 +17,14 @@ SOURCES += main.cpp\
     cloginwidget.cpp \
     cscreenwidget.cpp \
     cbackgroundlab.cpp \
-    cpushbutton.cpp
+    cpushbutton.cpp \
+    crole.cpp
 
 HEADERS  += cmainwidget.h \
     cloginwidget.h \
     cscreenwidget.h \
     cbackgroundlab.h \
-    cpushbutton.h
+    cpushbutton.h \
+    crole.h
 
 FORMS    += cmainwidget.ui

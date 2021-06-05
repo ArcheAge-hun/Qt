@@ -1,0 +1,13 @@
+INPUT(
+./debug\main.o
+./debug\cmainwidget.o
+./debug\cloginwidget.o
+./debug\cscreenwidget.o
+./debug\cbackgroundlab.o
+./debug\cpushbutton.o
+./debug\crole.o
+./debug\moc_cmainwidget.o
+./debug\moc_cloginwidget.o
+./debug\moc_cscreenwidget.o
+./debug\moc_crole.o
+);

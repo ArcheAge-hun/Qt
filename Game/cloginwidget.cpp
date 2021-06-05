@@ -1,6 +1,7 @@
 #include "cloginwidget.h"
 
 #include <QPixmap>
+#include <QDebug>
 
 CLoginWidget::CLoginWidget(QWidget *parent) : QWidget(parent)
 {
@@ -8,6 +9,9 @@ CLoginWidget::CLoginWidget(QWidget *parent) : QWidget(parent)
     m_pBackgroundLab->setScaledContents(true);
 
     QPixmap pixmap("./Login.png");
+    if (pixmap.isNull())
+        qDebug() << "111111111";
+
     m_pBackgroundLab->setPixmap(pixmap);
 
     m_pStartBtn = new CPushbutton("开始" ,this);
