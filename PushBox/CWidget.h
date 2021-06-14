@@ -3,8 +3,10 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QTimer>
 
 #include "CGameMap.h"
+#include "CRole.h"
 
 namespace Ui {
 class CWidget;
@@ -21,8 +23,10 @@ public:
 protected:
     void paintEvent(QPaintEvent *event);
 
+    void keyPressEvent(QKeyEvent *event);
+
 private:
-    void DrawMap(QPoint pos);
+    void MoveRole(QPoint pos);
 
 private:
     Ui::CWidget *ui;
@@ -30,6 +34,10 @@ private:
     QPainter *m_pPainter;
 
     CGameMap *m_pGameMap;
+
+    CRole *m_pRole;
+
+    QTimer *m_pTimer;
 };
 
 #endif // CWIDGET_H

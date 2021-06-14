@@ -40,6 +40,35 @@ void CGameMap::PaserMap(QString fileName)
     }
 }
 
+void CGameMap::DrawMap(QPainter *painter, QPoint pos)
+{
+    for (int row = 0; row < m_row; ++row) {
+        for (int column = 0; column < m_column; ++column) {
+            QString imageUrl;
+
+            switch (m_pMapArry[row][column]) {
+            case Wall:
+                imageUrl = QString(":/imagges/images/wall.png");
+                break;
+
+            case Road:
+                imageUrl = QString(":/imagges/images/road.png");
+                break;
+
+            case Box:
+                imageUrl = QString(":/imagges/images/box.png");
+                break;
+
+            case Point:
+                imageUrl = QString(":/imagges/images/point.png");
+                break;
+            }
+            QImage image(imageUrl);
+            painter->drawImage(QRect(pos.x() + column * image.width(), pos.y() + row * image.height(), image.width(), image.height()), image);
+        }
+    }
+}
+
 void CGameMap::Clear()
 {
     if (m_pMapArry != nullptr) {

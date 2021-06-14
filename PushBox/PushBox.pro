@@ -15,10 +15,12 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         CWidget.cpp \
-    CGameMap.cpp
+    CGameMap.cpp \
+    CRole.cpp
 
 HEADERS  += CWidget.h \
-    CGameMap.h
+    CGameMap.h \
+    CRole.h
 
 FORMS    += CWidget.ui
 

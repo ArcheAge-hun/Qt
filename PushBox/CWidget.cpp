@@ -2,14 +2,8 @@
 #include "ui_CWidget.h"
 
 #include <QFileDialog>
-
-enum MapInfo {
-    Wall,
-    Road,
-    Box,
-    Point,
-    InPoint,
-};
+#include <QKeyEvent>
+#include <QDebug>
 
 CWidget::CWidget(QWidget *parent) :
     QWidget(parent),
@@ -20,10 +14,17 @@ CWidget::CWidget(QWidget *parent) :
     m_pGameMap = new CGameMap(this);
     QString fileName = QFileDialog::getOpenFileName(this, "打开地图", "./", "*.txt");
     m_pGameMap->PaserMap(fileName);
+    m_pRole = new CRole(QPoint(1, 1), this);
 
     m_pPainter = new QPainter(this);
 
+    m_pTimer = new QTimer(this);
+
     setFixedSize(960, 800);
+
+    m_pTimer->start(200);
+
+    connect(m_pTimer, &QTimer::timeout, [this](){this->update();});
 }
 
 CWidget::~CWidget()
@@ -38,36 +39,73 @@ void CWidget::paintEvent(QPaintEvent *event)
 
     m_pPainter->begin(this);
 
-    DrawMap(QPoint(0, 100));
+    m_pGameMap->DrawMap(m_pPainter, QPoint(0, 100));
+
+    m_pRole->DrawRole(m_pPainter, QPoint(0, 100));
 
     m_pPainter->end();
 }
 
-void CWidget::DrawMap(QPoint pos)
+void CWidget::keyPressEvent(QKeyEvent *event)
 {
-    for (int row = 0; row < m_pGameMap->m_row; ++row) {
-        for (int column = 0; column < m_pGameMap->m_column; ++column) {
-            QString imageUrl;
+    switch (event->key()) {
+    case Qt::Key_W:
+    case Qt::Key_Up:
+        MoveRole(QPoint(0, -1));
+        break;
 
-            switch (m_pGameMap->m_pMapArry[row][column]) {
-            case Wall:
-                imageUrl = QString(":/imagges/images/wall.png");
-                break;
+    case Qt::Key_A:
+    case Qt::Key_Left:
+        MoveRole(QPoint(-1, 0));
+        break;
 
-            case Road:
-                imageUrl = QString(":/imagges/images/road.png");
-                break;
+    case Qt::Key_S:
+    case Qt::Key_Down:
+        MoveRole(QPoint(0, +1));
+        break;
 
-            case Box:
-                imageUrl = QString(":/imagges/images/box.png");
-                break;
+    case Qt::Key_D:
+    case Qt::Key_Right:
+        MoveRole(QPoint(+1, 0));
+        break;
+    }
+}
 
-            case Point:
-                imageUrl = QString(":/imagges/images/point.png");
-                break;
-            }
-            QImage image(imageUrl);
-            m_pPainter->drawImage(QRect(pos.x() + column * image.width(), pos.y() + row * image.height(), image.width(), image.height()), image);
+void CWidget::MoveRole(QPoint pos)
+{
+    QPoint newPos = m_pRole->m_pos + pos;
+
+    int newRow = newPos.x();
+    int newCol = newPos.y();
+
+    if (m_pGameMap->m_pMapArry[newRow][newCol] == Wall) {
+        return;
+    }
+    else if (m_pGameMap->m_pMapArry[newRow][newCol] == Box) {
+        if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Road) {
+            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] = Box;
+            m_pGameMap->m_pMapArry[newRow][newCol] = Road;
+        }
+        else if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Point) {
+            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == InPoint;
+            m_pGameMap->m_pMapArry[newRow][newCol] == Road;
+        } else {
+            return;
         }
     }
+    else if (m_pGameMap->m_pMapArry[newRow][newCol] == InPoint) {
+        if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Road) {
+            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] = Box;
+            m_pGameMap->m_pMapArry[newRow][newCol] = Point;
+        }
+        else if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Point) {
+            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == InPoint;
+            m_pGameMap->m_pMapArry[newRow][newCol] == Point;
+        } else {
+            return;
+        }
+    }
+
+    m_pRole->Move(pos);
+    qDebug() << m_pRole->m_pos;
 }

@@ -2,6 +2,16 @@
 #define CGAMEMAP_H
 
 #include <QObject>
+#include <QPainter>
+#include <QPoint>
+
+enum MapInfo {
+    Wall,
+    Road,
+    Box,
+    Point,
+    InPoint,
+};
 
 class CGameMap : public QObject
 {
@@ -16,6 +26,8 @@ public slots:
 
 public:
     void PaserMap(QString fileName);
+
+    void DrawMap(QPainter *painter, QPoint pos);
 
 private:
     void Clear();
