@@ -1,6 +1,7 @@
 #include "CGameMap.h"
 
 #include <QFile>
+#include <QDebug>
 
 CGameMap::CGameMap(QObject *parent) : QObject(parent)
 {

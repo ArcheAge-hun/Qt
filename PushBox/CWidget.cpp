@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QDebug>
+#include <iostream>
 
 CWidget::CWidget(QWidget *parent) :
     QWidget(parent),
@@ -75,37 +76,39 @@ void CWidget::MoveRole(QPoint pos)
 {
     QPoint newPos = m_pRole->m_pos + pos;
 
-    int newRow = newPos.x();
-    int newCol = newPos.y();
+    int newRow = newPos.y();
+    int newCol = newPos.x();
+
+    int offCol = pos.x();
+    int offRow = pos.y();
 
     if (m_pGameMap->m_pMapArry[newRow][newCol] == Wall) {
         return;
     }
     else if (m_pGameMap->m_pMapArry[newRow][newCol] == Box) {
-        if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Road) {
-            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] = Box;
+        if (m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] == Road) {
+            m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] = Box;
             m_pGameMap->m_pMapArry[newRow][newCol] = Road;
         }
-        else if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Point) {
-            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == InPoint;
-            m_pGameMap->m_pMapArry[newRow][newCol] == Road;
+        else if (m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] == Point) {
+            m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] = InPoint;
+            m_pGameMap->m_pMapArry[newRow][newCol] = Road;
         } else {
             return;
         }
     }
     else if (m_pGameMap->m_pMapArry[newRow][newCol] == InPoint) {
-        if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Road) {
-            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] = Box;
+        if (m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] == Road) {
+            m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] = Box;
             m_pGameMap->m_pMapArry[newRow][newCol] = Point;
         }
-        else if (m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == Point) {
-            m_pGameMap->m_pMapArry[newRow + pos.x()][newCol + pos.y()] == InPoint;
-            m_pGameMap->m_pMapArry[newRow][newCol] == Point;
+        else if (m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] == Point) {
+            m_pGameMap->m_pMapArry[newRow + offRow][newCol + offCol] = InPoint;
+            m_pGameMap->m_pMapArry[newRow][newCol] = Point;
         } else {
             return;
         }
     }
 
     m_pRole->Move(pos);
-    qDebug() << m_pRole->m_pos;
 }
