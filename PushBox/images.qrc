@@ -1,10 +1,11 @@
 <RCC>
-    <qresource prefix="/imagges">
+    <qresource prefix="/">
         <file>images/bg.png</file>
         <file>images/box.png</file>
+        <file>images/inpoint.png</file>
         <file>images/point.png</file>
         <file>images/road.png</file>
-        <file>images/wall.png</file>
         <file>images/role.png</file>
+        <file>images/wall.png</file>
     </qresource>
 </RCC>

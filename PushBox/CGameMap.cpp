@@ -49,19 +49,23 @@ void CGameMap::DrawMap(QPainter *painter, QPoint pos)
 
             switch (m_pMapArry[row][column]) {
             case Wall:
-                imageUrl = QString(":/imagges/images/wall.png");
+                imageUrl = QString("://images/wall.png");
                 break;
 
             case Road:
-                imageUrl = QString(":/imagges/images/road.png");
+                imageUrl = QString("://images/road.png");
                 break;
 
             case Box:
-                imageUrl = QString(":/imagges/images/box.png");
+                imageUrl = QString("://images/box.png");
                 break;
 
             case Point:
-                imageUrl = QString(":/imagges/images/point.png");
+                imageUrl = QString("://images/point.png");
+                break;
+
+            case InPoint:
+                imageUrl = QString("://images/inpoint.png");
                 break;
             }
             QImage image(imageUrl);

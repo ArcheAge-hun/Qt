@@ -13,8 +13,7 @@ CWidget::CWidget(QWidget *parent) :
     ui->setupUi(this);
 
     m_pGameMap = new CGameMap(this);
-    QString fileName = QFileDialog::getOpenFileName(this, "打开地图", "./", "*.txt");
-    m_pGameMap->PaserMap(fileName);
+    m_pGameMap->PaserMap(QString("://maps/map1.txt"));
     m_pRole = new CRole(QPoint(1, 1), this);
 
     m_pPainter = new QPainter(this);
@@ -36,7 +35,7 @@ CWidget::~CWidget()
 void CWidget::paintEvent(QPaintEvent *event)
 {
     QPainter bgPainter(this);
-    bgPainter.drawImage(QRect(0, 0, this->width(), this->height()), QImage(":/imagges/images/bg.png"));
+    bgPainter.drawImage(QRect(0, 0, this->width(), this->height()), QImage("://images/bg.png"));
 
     m_pPainter->begin(this);
 

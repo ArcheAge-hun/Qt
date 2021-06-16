@@ -25,4 +25,5 @@ HEADERS  += CWidget.h \
 FORMS    += CWidget.ui
 
 RESOURCES += \
-    images.qrc
+    images.qrc \
+    maps.qrc

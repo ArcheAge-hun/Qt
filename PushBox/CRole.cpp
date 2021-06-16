@@ -4,7 +4,7 @@ CRole::CRole(QPoint pos, QObject *parent) : QObject(parent)
 {
     m_pos = pos;
 
-    m_image = QImage(":/imagges/images/role.png");
+    m_image = QImage("://images/role.png");
 
     m_paintPos = m_pos * m_image.width();
 }
